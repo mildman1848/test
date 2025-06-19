@@ -1,12 +1,16 @@
-# Flutter APK Demo
+# flutter_apk_demo_neu
 
-Ein minimales Flutter-Projekt zum Testen von GitHub Actions (APK-Release mit Flutter 3.32.x und Dart 3.8.x).
+A new Flutter project.
 
-- Nach Push auf `main`: APK wird automatisch gebaut und unter Releases verÃ¶ffentlicht.
-- GitHub Secret `GH_PERSONAL_TOKEN` mit mindestens `repo`-Rechten erforderlich.
+## Getting Started
 
-## Schnellstart
+This project is a starting point for a Flutter application.
 
-1. Repo anlegen und Code pushen.
-2. Secret hinterlegen.
-3. APK unter Releases downloaden!
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
