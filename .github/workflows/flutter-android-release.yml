@@ -22,7 +22,6 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      # Automatisch Tag erstellen und pushen
       - name: Create and push tag
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
