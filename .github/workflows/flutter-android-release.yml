@@ -1,30 +1,43 @@
-name: Build & Release Android APK
+name: Build & Auto-Release Android APK
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.32.x'
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.x'
 
-    - name: Install dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Build APK
-      run: flutter build apk --release
+      - name: Build APK
+        run: flutter build apk --release
 
-    - name: Upload APK to release
-      uses: softprops/action-gh-release@v2
-      with:
-        files: build/app/outputs/flutter-apk/app-release.apk
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
+      # Automatisch Tag erstellen und pushen
+      - name: Create and push tag
+        env:
+          GH_TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
+        run: |
+          TAG="auto-$(date +'%Y%m%d-%H%M%S')"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag $TAG
+          git push https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git $TAG
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Upload APK to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
